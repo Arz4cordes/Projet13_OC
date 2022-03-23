@@ -6,7 +6,6 @@ from pytest_django.asserts import assertTemplateUsed
 from lettings.models import Address, Letting
 
 
-@pytest.mark.django_db
 def test_url_lettings_index_page():
     """
     Teste si le nom de la vue est correct

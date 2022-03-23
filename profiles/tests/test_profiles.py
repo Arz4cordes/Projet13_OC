@@ -7,7 +7,6 @@ from profiles.models import Profile
 from django.contrib.auth.models import User
 
 
-@pytest.mark.django_db
 def test_url_lettings_index_page():
     """
     Teste si le nom de la vue est correct
