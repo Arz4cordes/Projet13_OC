@@ -12,16 +12,8 @@ def test_url_lettings_index_page():
     Teste si le nom de la vue est correct
     """
     path = reverse('lettings:lettings_index')
-    print()
-    print()
-    print("##########")
-    print(path)
-    print(resolve(path))
-    print(resolve(path).view_name)
-    print("##########")
-    print()
-    print()
-    assert resolve(path).view_name == 'index'
+    view = resolve(path).func.__name__
+    assert view == 'index'
 
 
 @pytest.mark.django_db
@@ -97,8 +89,9 @@ def test_url_lettings_detail_page():
     letting_id = letting.id
     path = reverse('lettings:letting', kwargs={'letting_id': letting_id})
     partial_path = "/" + str(letting_id)
+    view = resolve(path).func.__name__
+    assert view == 'letting'
     assert partial_path in path
-    # assert resolve(path).view_name == 'letting'
 
 
 @pytest.mark.django_db

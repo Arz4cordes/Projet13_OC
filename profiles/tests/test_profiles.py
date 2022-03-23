@@ -1,20 +1,20 @@
 import pytest
 
 from django.test import Client
-from django.urls import reverse
+from django.urls import reverse, resolve
 from pytest_django.asserts import assertTemplateUsed
 from profiles.models import Profile
 from django.contrib.auth.models import User
 
 
 @pytest.mark.django_db
-def test_url_profiles_index_page():
+def test_url_lettings_index_page():
     """
     Teste si le nom de la vue est correct
     """
-    # path = reverse('profiles:profiles_index')
-    # assert resolve(path).view_name == 'index'
-    assert 1 + 1 == 2
+    path = reverse('profiles:profiles_index')
+    view = resolve(path).func.__name__
+    assert view == 'profiles_index'
 
 
 @pytest.mark.django_db
@@ -81,10 +81,11 @@ def test_url_profiles_detail_page():
     the_name = first_user.username
     Profile.objects.create(user=first_user,
                            favorite_city='Rennes')
-    path = reverse('profiles:profiles', kwargs={'username': the_name})
+    path = reverse('profiles:profile', kwargs={'username': the_name})
     partial_path = "/" + str(the_name)
+    view = resolve(path).func.__name__
+    assert view == 'profile'
     assert partial_path in path
-    # assert resolve(path).view_name == 'letting'
 
 
 @pytest.mark.django_db
@@ -100,7 +101,7 @@ def test_view_profiles_detail_page():
     the_name = first_user.username
     profile = Profile.objects.create(user=first_user,
                                      favorite_city='Rennes')
-    path = reverse('profiles:profiles', kwargs={'username': the_name})
+    path = reverse('profiles:profile', kwargs={'username': the_name})
     client = Client()
     context = {'profile': profile}
     response = client.get(path, context)
@@ -122,7 +123,7 @@ def test_template_profiles_detail_page():
     the_name = first_user.username
     profile = Profile.objects.create(user=first_user,
                                      favorite_city='Rennes')
-    path = reverse('profiles:profiles', kwargs={'username': the_name})
+    path = reverse('profiles:profile', kwargs={'username': the_name})
     client = Client()
     context = {'profile': profile}
     response = client.get(path, context)
