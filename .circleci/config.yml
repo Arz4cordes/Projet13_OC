@@ -1,11 +1,17 @@
-version: 2.1
-
+version: '2.1'
+orbs:
+  win: circleci/windows@3.0
 jobs:
-  build: # name of your job
-    machine:
-      image: windows-default # Windows machine image
-    resource_class: windows.medium
+  build:
+    executor:
+      imagename: windows-server-2022-gui
+      name: win/windows
+      size: medium
+      version: edge
     steps:
-      # Commands are run in a Windows virtual machine environment
-        - checkout
-        - run: Write-Host 'Hello, Windows'
+      - checkout
+      - run: 'Write-Host ''Hello, Windows'''
+workflows:
+  my-workflow:
+    jobs:
+      - build
