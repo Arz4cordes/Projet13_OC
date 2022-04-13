@@ -7,5 +7,3 @@ urlpatterns = [
     path('lettings/', views.index, name='lettings_index'),
     path('lettings/<int:letting_id>/', views.letting, name='letting'),
 ]
-
-print('Bonjuor tout le monde')
