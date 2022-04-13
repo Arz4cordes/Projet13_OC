@@ -42,6 +42,6 @@ jobs:
           name: Build and push Docker image
           command:
             docker build -t docker-oc-lettings:v5 .
-            docker login -u arz4cordes -p $DOCKERHUB_PASSWORD
+            docker login --username arz4cordes --password $DOCKERHUB_PASSWORD
             docker tag docker-oc-lettings:v5 arz4cordes/oc-lettings-site:v5
             docker push arz4cordes/oc-lettings-site:v5
