@@ -39,9 +39,14 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Build and push Docker image
-          command:
-            docker build -t docker-oc-lettings:v5 .
-            docker login --username arz4cordes --password $DOCKERHUB_PASSWORD
-            docker tag docker-oc-lettings:v5 arz4cordes/oc-lettings-site:v5
-            docker push arz4cordes/oc-lettings-site:v5
+          name: Build Docker image
+          command: docker build -t docker-oc-lettings:v5 .
+      - run:
+          name: Login to DockerHub
+          command: docker login --username arz4cordes --password $DOCKERHUB_PASSWORD
+      - run:
+          name: Lin to DockerHub
+          command: docker tag docker-oc-lettings:v5 arz4cordes/oc-lettings-site:v5
+      - run:
+          name: push Docker image
+          command: docker push arz4cordes/oc-lettings-site:v5
