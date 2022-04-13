@@ -42,4 +42,4 @@ jobs:
       - run:
           name: Run linting
           # This assumes pytest is installed via the install-package step above
-          command: flake8 oc_lettings_site profiles lettings --max-line-length=119
+          command: flake8
