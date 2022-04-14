@@ -9,7 +9,9 @@ workflows:
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
       - build-and-test
-      - build-and-push
+      - build-and-push:
+          requires:
+            - build-and-test
 
 
 jobs:
