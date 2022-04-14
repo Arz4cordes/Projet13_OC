@@ -45,8 +45,8 @@ jobs:
           name: Login to DockerHub
           command: docker login --username arz4cordes --password $DOCKERHUB_PASSWORD
       - run:
-          name: Lin to DockerHub
-          command: docker tag docker-oc-lettings:v5 arz4cordes/oc-lettings-site:v5
+          name: LinK to DockerHub
+          command: docker tag docker-oc-lettings:v5 arz4cordes/oc-lettings-site:$CIRCLE_SHA1
       - run:
           name: push Docker image
           command: docker push arz4cordes/oc-lettings-site:v5
