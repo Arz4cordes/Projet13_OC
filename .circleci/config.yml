@@ -9,12 +9,18 @@ workflows:
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
     jobs:
       - build-and-test
-      - build-and-push:
+      - build-and-push-dockerhub:
           filters:
             branches:
               only: master
           requires:
             - build-and-test
+      - build-and-push-heroku:
+          filters:
+            branchers:
+              only: master
+          requires:
+            -build-and-push-dockerhub
 
 
 jobs:
@@ -36,7 +42,8 @@ jobs:
       - run:
           name: Run linting
           command: flake8
-  build-and-push:
+
+  build-and-push-dockerhub:
     docker:
       - image: cimg/python:3.10
     steps:
@@ -55,3 +62,25 @@ jobs:
       - run:
           name: push Docker image
           command: docker push arz4cordes/oc-lettings-site:$CIRCLE_SHA1
+
+  build-and-push-heroku:
+    deploy-dev:
+      machine: true
+      steps:
+        - checkout
+        - run:
+          name: Install Heroku CLI (If not installed)
+          command: |
+                    if [[ $(command -v heroku) == "" ]]; then
+                      curl https://cli-assets.heroku.com/install.sh | sh
+                    else
+                      echo "Heroku is already installed. No operation was performed."
+        - run:
+          name: Login to Heroku Docker image registry
+          command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
+        - run:
+          name: Push Docker image to Heroku
+          command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:push -a oc-lettings-0711 web
+        - run:
+          name: Login to Heroku Docker image registry
+          command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release -a oc-lettings-0711 web
