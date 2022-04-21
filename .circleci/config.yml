@@ -66,7 +66,6 @@ jobs:
   build-and-push-heroku:
     docker:
       - image: cimg/python:3.10
-    machine: true
     steps:
       - checkout
       - run:
