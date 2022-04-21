@@ -3,6 +3,8 @@ version: 2.1
 orbs:
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
   python: circleci/python@1.2
+  heroku: circleci/heroku@1.2.6
+
 
 workflows:
   sample:  
@@ -64,17 +66,8 @@ jobs:
           command: docker push arz4cordes/oc-lettings-site:$CIRCLE_SHA1
 
   build-and-push-heroku:
-    docker:
-      - image: cimg/python:3.10
     steps:
       - checkout
-      - run:
-        name: Install Heroku CLI (If not installed)
-        command: |
-                  if [[ $(command -v heroku) == "" ]]; then
-                    curl https://cli-assets.heroku.com/install.sh | sh
-                  else
-                    echo "Heroku is already installed. No operation was performed."
       - run:
         name: Login to Heroku Docker image registry
         command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
