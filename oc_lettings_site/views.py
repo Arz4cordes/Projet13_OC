@@ -9,4 +9,4 @@ from django.shortcuts import render
 # Aliquam vitae erat ac orci placerat luctus. Nullam elementum urna nisi, pellentesque iaculis enim cursus in.
 # Praesent volutpat porttitor magna, non finibus neque cursus id.
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'oc_lettings_site/index.html')

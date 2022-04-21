@@ -24,4 +24,4 @@ def test_view_lettings_index_page():
     content = response.content.decode()
     assert ("<title>" in content) and ("</title>" in content)
     assert response.status_code == 200
-    assertTemplateUsed(response, "index.html")
+    assertTemplateUsed(response, "oc_lettings_site/index.html")
