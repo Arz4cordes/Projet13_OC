@@ -75,3 +75,13 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+## Conteneurisation et déploiement
+
+### Description
+- Circle CI est utilisé comme pipeline, les différents jobs sont décrits dans le fichier config.yml
+- L'application est testée à chaque commit sur une branche (commande pytest)
+- L'application est envoyée sur DockerHub à chaque commit sur la branche master, à condition que les tests passent.
+  L'image Docker est construite à l'aide du fichier Dockerfile
+- L'image Docker est déployée et lancée sur Heroku à chaque commit sur la branche master, à condition que les tests passent
+  et après l'envoi sur DockerHub
