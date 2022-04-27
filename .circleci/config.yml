@@ -22,7 +22,7 @@ workflows:
             branches:
               only: master
           requires:
-            -build-and-push-dockerhub
+            - build-and-push-dockerhub
 
 
 jobs:
