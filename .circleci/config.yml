@@ -79,5 +79,5 @@ jobs:
           name: Push Docker from Dockerhub to Heroku
           command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a arz4cordes/oc-lettings-site:$CIRCLE_SHA1 web
       - run:
-          name: Release
+          name: Release app
           command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a arz4cordes/oc-lettings-site:$CIRCLE_SHA1 web
