@@ -65,14 +65,19 @@ jobs:
           command: docker push arz4cordes/oc-lettings-site:$CIRCLE_SHA1
 
   build-and-push-heroku:
-    docker:
-       - image: arz4cordes/oc-lettings-site:$CIRCLE_SHA1
-         auth:
-           username: arz4cordes
-           password: $DOCKERHUB_PASSWORD
+    machine: true
     steps:
-       - checkout
-       - run:
-           name: Deploy Main to Heroku
-           command: |
-             git push https://heroku:$HEROKU_TOKEN@git.heroku.com/oc-lettings-0711.git main
+      - checkout
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+      - run:
+          name: Login to Heroku
+          command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
+      - run:
+          name: Push Docker from Dockerhub to Heroku
+          command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:push -a arz4cordes/oc-lettings-site:$CIRCLE_SHA1 web
+      - run:
+          name: Release
+          command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release -a arz4cordes/oc-lettings-site:$CIRCLE_SHA1 web
