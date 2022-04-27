@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
   python: circleci/python@1.2
-  heroku: circleci/heroku@1.2.6
+  heroku: circleci/heroku@0.0.10
 
 
 workflows:
@@ -59,7 +59,7 @@ jobs:
           name: Login to DockerHub
           command: docker login --username arz4cordes --password $DOCKERHUB_PASSWORD
       - run:
-          name: LinK to DockerHub
+          name: Link to DockerHub
           command: docker tag docker-oc-lettings:v6 arz4cordes/oc-lettings-site:$CIRCLE_SHA1
       - run:
           name: push Docker image
@@ -67,13 +67,7 @@ jobs:
 
   build-and-push-heroku:
     steps:
-      - checkout
-      - run:
-        name: Login to Heroku Docker image registry
-        command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
-      - run:
-        name: Push Docker image to Heroku
-        command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:push -a oc-lettings-0711 web
-      - run:
-        name: Login to Heroku Docker image registry
-        command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release -a oc-lettings-0711 web
+       - checkout
+       - run:
+           name: Deploy Master to Heroku
+           command: git push https://heroku:$HEROKU_TOKEN@git.heroku.com/oc-lettings-0711.git master
