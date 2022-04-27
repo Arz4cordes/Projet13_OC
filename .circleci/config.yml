@@ -66,6 +66,11 @@ jobs:
           command: docker push arz4cordes/oc-lettings-site:$CIRCLE_SHA1
 
   build-and-push-heroku:
+    docker:
+       - image: docker-oc-lettings:v6
+         auth:
+           username: arz4cordes
+           password: $DOCKERHUB_PASSWORD
     steps:
        - checkout
        - run:
