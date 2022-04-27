@@ -74,5 +74,14 @@ jobs:
     steps:
        - checkout
        - run:
-           name: Deploy Master to Heroku
-           command: git push https://heroku:$HEROKU_TOKEN@git.heroku.com/oc-lettings-0711.git master
+           name: Install Heroku
+           command: sudo curl https://cli-assets.heroku.com/install.sh | sh
+       - run:
+           name: Login to Heroku
+           command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
+       - run:
+           name: Push Docker from Dockerhub to Heroku
+           command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:push -a arz4cordes/oc-lettings-site:$CIRCLE_SHA1 web
+       - run:
+           name: Release
+           command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:release -a python-django-starter web
