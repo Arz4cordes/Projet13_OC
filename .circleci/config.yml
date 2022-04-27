@@ -74,6 +74,9 @@ jobs:
     steps:
        - checkout
        - run:
+           name: Install Heroku
+           command: sudo curl https://cli-assets.heroku.com/install.sh
+       - run:
            name: Login to Heroku
            command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
        - run:
