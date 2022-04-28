@@ -62,7 +62,7 @@ jobs:
           command: docker tag docker-oc-lettings:v6 arz4cordes/oc-lettings-site:$CIRCLE_SHA1
       - run:
           name: push Docker image
-          command: docker push arz4cordes/oc-lettings-site:$CIRCLE_SHA1
+          command: docker push arz4cordes/oc-lettings-site:${CIRCLE_SHA1}
 
   build-and-push-heroku:
     machine: true
@@ -74,16 +74,11 @@ jobs:
             sudo curl https://cli-assets.heroku.com/install.sh | sh
       - run:
           name: Login to Heroku
-          command: HEROKU_API_KEY=$HEROKU_TOKEN heroku container:login
+          command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
       - run:
           name: Push Docker from Dockerhub to Heroku
-          command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-1974 web
+          command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-2006
       - run:
           name: Build Docker image
-          command: docker build -t docker-oc-lettings:v6 . 
-      - run:
-          name: Docker tag 
-          command: docker tag docker-oc-lettings:v6 registry.heroku.com/oc-lettings-1974/web
-      - run:
-          name: Push on app
-          command: docker push registry.heroku.com/oc-lettings-1974/web
+          command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-2006 web 
+
