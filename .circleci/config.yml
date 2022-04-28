@@ -45,8 +45,6 @@ jobs:
           command: flake8
 
   build-and-push-dockerhub:
-    docker:
-      - image: cimg/python:3.10
     steps:
       - checkout
       - setup_remote_docker:
@@ -77,8 +75,7 @@ jobs:
           command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
       - run:
           name: Push Docker from Dockerhub to Heroku
-          command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-2006
+          command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-2006 web
       - run:
           name: Build Docker image
           command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-2006 web 
-
