@@ -45,6 +45,8 @@ jobs:
           command: flake8
 
   build-and-push-dockerhub:
+    docker:
+      - image: cimg/python:3.10
     steps:
       - checkout
       - setup_remote_docker:
@@ -60,7 +62,7 @@ jobs:
           command: docker tag docker-oc-lettings:v6 arz4cordes/oc-lettings-site:$CIRCLE_SHA1
       - run:
           name: push Docker image
-          command: docker push arz4cordes/oc-lettings-site:${CIRCLE_SHA1}
+          command: docker push arz4cordes/oc-lettings-site:$CIRCLE_SHA1
 
   build-and-push-heroku:
     machine: true
