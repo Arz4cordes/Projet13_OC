@@ -76,8 +76,8 @@ jobs:
           name: Login to Heroku
           command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
       - run:
-          name: Push Docker from Dockerhub to Heroku
+          name: Push Docker to Heroku
           command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-1974 web
       - run:
-          name: Build Docker image
+          name: Run Docker image
           command: HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-1974 web 
