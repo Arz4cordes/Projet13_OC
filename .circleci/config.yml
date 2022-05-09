@@ -69,7 +69,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Heroku cli
+          name: Install Heroku cli and push docker online
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
