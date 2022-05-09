@@ -112,4 +112,4 @@ le déploiemement se fait sur un serveur Heroku dans un conteneur de l'applicati
   les 3 jobs appaissent, et vous pouvez cliquer dessus pour voir le détail de chaque job. Si tout se passe bien, une pastille verte apparait
   devant le job correctement réalisé. Sinon, en cas de problème, cliquez sur le job associé à une pastille rouge
   et vous aurez l'affichage des logs pour identifier un problème.
-  - 3) suite...
+  - 3) suite et fin README
