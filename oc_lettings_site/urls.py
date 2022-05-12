@@ -11,3 +11,5 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('', include('lettings.urls')),
 ]
+
+print('Helo world')
