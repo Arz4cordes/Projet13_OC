@@ -6,7 +6,7 @@ h1
     border-radius: 4px;
 }
 
-a
+a, a:visited, a:hover
 {
     color:yellow;
 }
